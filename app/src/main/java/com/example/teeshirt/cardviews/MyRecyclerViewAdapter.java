@@ -33,7 +33,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         @Override
         public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), v);
+            myClickListener.onItemClick(getPosition(), v);
         }
     }
 
@@ -59,5 +59,24 @@ public class MyRecyclerViewAdapter extends RecyclerView
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
+    }
+
+    public void addItem(DataObject dataObj, int index){
+        mDataset.add(index, dataObj);
+        notifyItemInserted(index);
+    }
+
+    public void deleteItem(int index){
+        mDataset.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDataset.size();
+    }
+
+    public interface MyClickListener{
+        public void onItemClick(int position, View v);
     }
 }
